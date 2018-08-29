@@ -1,0 +1,9 @@
+mkdir -p ~/Abathur
+docker run -dit --name Abathur -v ~/Abathur:/root -p 3000:3000 python:2-slim
+docker exec Abathur sh -c "pip install flask"
+docker exec Abathur sh -c "echo 'from flask import Flask' > /root/hello.py"
+docker exec Abathur sh -c "echo 'app = Flask(__name__)' >> /root/hello.py"
+docker exec Abathur sh -c "echo '@app.route(\"/\")' >> /root/hello.py"
+docker exec Abathur sh -c "echo 'def hello_world():' >> /root/hello.py"
+docker exec Abathur sh -c "echo '    return \"<html><body><h1>Hello World</h1></body></html>\" ' >> /root/hello.py"
+docker exec -e FLASK_APP=/root/hello.py -d Abathur flask run -p 3000 --host=0.0.0.0
