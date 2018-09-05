@@ -1,3 +1,5 @@
-FROM alpine
+FROM  alpine
 
-CMD ["echo", "Hello World!"]
+RUN apk update && apk add vim
+
+ENTRYPOINT vim
